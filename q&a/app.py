@@ -4,9 +4,9 @@ from deeppavlov import configs, train_model
 from deeppavlov.core.common.file import read_json
 from flask_cors import CORS
 
-model_config = read_json(configs.faq.tfidf_logreg_en_faq)
+# model_config = read_json(configs.faq.tfidf_logreg_en_faq)
 
-faq = train_model('./tfidf_logreg_en_faq.json')
+faq = train_model('./configs/tfidf_logreg_en_faq.json')
 
 # initializing a flask app
 app = Flask(__name__)
@@ -20,7 +20,8 @@ def api():
     json_val = request.json
     query = json_val['query']
     print('query => ',query)
-    ans = faq([query,'what is zeamed ?'])
+    ans = faq([query])
+    print(ans)
     return json.dumps({'response' : ans}) , 200
 
   else:
