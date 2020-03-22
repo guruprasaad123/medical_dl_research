@@ -29,7 +29,7 @@ export class FaqComponent implements OnInit {
     };
     return this.http.post(url, body , options).subscribe((object:any)=>{
       this.loading = false ;
-      this.answer = object.response[0];
+      this.answer = object.response.answer;
       console.log('response => ',object,  this.answer );
     });
    }

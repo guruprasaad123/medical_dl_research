@@ -7,7 +7,8 @@
 
 # dependencies
 /q&a/faqapp/node_modules
-/q&a/models
+# /q&a/models
+
 
 # profiling files
 chrome-profiler-events.json
