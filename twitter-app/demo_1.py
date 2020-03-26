@@ -19,4 +19,9 @@ print('authenticated - Twitter')
 
 public_tweets = api.search('corona')
 
-print(public_tweets)
+print( len(public_tweets) )
+
+print( public_tweets[0].to_list() )
+
+# for key , value in public_tweets[0].items():
+#     print(key,value,'\n')

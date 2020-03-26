@@ -58,6 +58,15 @@ class FaqModel():
             question = tf.placeholder( tf.string , name="Question" )
             self.embed_questions = self.model( self.df.Question  )
             
+            with tf.Session(graph=graph)  as session:
+
+                session.run( [ tf.global_variables_initializer() , tf.tables_initializer() ] )
+
+                self.question_matrix = session.run(  self.embed_questions )
+
+                print('Question matrix ',question_matrix.shape)
+                
+
         except (OSError, IOError) as e:
             print('Error => ',e)
 
@@ -81,13 +90,14 @@ class FaqModel():
                 session.run( tf.global_variables_initializer() )
                 session.run( tf.tables_initializer() )
 
-                question_matrix , query_matrix = session.run([self.embed_questions , self.embed_query] , feed_dict = {
+                query_matrix = session.run([ self.embed_query ] , feed_dict = {
                     'Query:0' : [Query]
                 })
 
-                print( 'question runned ',question_matrix )
+                # print( 'question runned ',question_matrix )
+                
                 print( query_matrix.shape )
-                product = np.inner(query_matrix , question_matrix)
+                product = np.inner(query_matrix , self.question_matrix)
                 # product = product.reshape(-1,1)
                 
                 max_score = 1e-10

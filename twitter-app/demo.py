@@ -17,5 +17,6 @@ results = api.GetSearch( raw_query="q=twitter%20&result_type=recent&since=2014-0
 
 print(type(results))
 print(type(results[0]))
-for key , value in results[0].items() :
-    print(key , value )
+
+for key , value in results[0].AsDict().items() :
+    print(key , value ,"\n" )
