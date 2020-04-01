@@ -1,0 +1,9 @@
+[Unit]
+Desciption=Gunicorn Service
+After=network.target
+
+[Service]
+User=ec2-User
+Group=www-data
+WorkingDirectory=/flaskapp
+ExecStart=/home/ec2-user/research/bin/gunicorn --worker 3 --bind unix:flaskapp.sock -m 007 hello:app

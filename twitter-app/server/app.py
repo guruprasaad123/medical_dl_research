@@ -6,7 +6,7 @@ from twitter_models.model import twitter_api
 twitterApi = twitter_api()
 # initializing a flask app
 app = Flask(__name__)
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+# app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 CORS(app)
 
 
@@ -54,6 +54,7 @@ def api( search , next_pg  , max_id ):
 
 if __name__ == '__main__':
   app.secret_key = 'super_secret_key'
-  app.debug = True
-  app.use_reloader=False
-  app.run(host='0.0.0.0', port=4000)
+  # app.debug = True
+  # app.use_reloader=False
+  #app.run(host='0.0.0.0', port=4000)
+  app.run()

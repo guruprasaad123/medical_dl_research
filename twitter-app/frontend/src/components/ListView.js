@@ -23,7 +23,7 @@ class ListView extends Component {
 
     loadTweets = ()=>
     {
-        axios.get('http://localhost:4000/api/corono/0/9999').then((object)=>{
+        axios.get('http://ec2-13-232-219-139.ap-south-1.compute.amazonaws.com:4000/api/corono/0/9999').then((object)=>{
               
         const response = object.data.response ;
         console.log('response => ',  response.length ); 
@@ -41,7 +41,7 @@ class ListView extends Component {
     loadMore = ()=>
     {
         const searchMeta = this.state.searchMeta ;
-        axios.get(`http://localhost:4000/api/corono/1/${searchMeta.max_id}`).then((object)=>{
+        axios.get(`http://ec2-13-232-219-139.ap-south-1.compute.amazonaws.com:4000/api/corono/1/${searchMeta.max_id}`).then((object)=>{
             const response = object.data.response ;
             console.log('response => ',response.length);
             if( response.length > 0 )
