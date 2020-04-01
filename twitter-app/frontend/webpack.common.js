@@ -4,7 +4,8 @@ const path = require('path');
 const  ExtractTextPlugin = require('extract-text-webpack-plugin');
 const htmlWebpackPlugin = new HtmlWebPackPlugin({
   template: "./src/index.html",
-  filename: "./index.html"
+  filename: "./index.html",
+  inject:'body'
 });
 
 function common(env)
@@ -18,6 +19,7 @@ function common(env)
           chunkFilename: '[name].bundle.js',
           path: path.resolve(__dirname, 'dist')
         },
+        plugins: [htmlWebpackPlugin],
         //output:'./dist/main.js',
         module: {
           rules: [

@@ -5,8 +5,6 @@ import numpy as np
 import os
 import pandas as pd
 import re
-import seaborn as sns
-
 graph = tf.get_default_graph()
 
 class FaqModel():

@@ -1,7 +1,11 @@
 import React , { Component } from "react"
 import styled from 'styled-components';
 
-styled.div
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import ListView from './components/ListView';
+
 class App extends Component
 {
     constructor(props)
@@ -12,11 +16,21 @@ class App extends Component
 
     render()
     {
-       return ( <div className="container" >
-            <h1>
-                Guruprasaad Durairaj
-            </h1>
-        </div>
+       return (
+
+        <React.Fragment>
+        <CssBaseline />
+        <Container maxWidth="lg">
+          <Typography   variant="h2" component="h2" style={{ textAlign : 'center' , fontWeight : 'bolder' , backgroundColor: '#cfe8fc' }} >
+            Welcome to #Corono Analysis App 
+              </Typography>
+              <ListView/>
+        </Container>
+
+       
+      
+      </React.Fragment>
+
        )
     }
 }
