@@ -22,7 +22,7 @@ class App extends Component
         <CssBaseline />
         <Container maxWidth="lg">
           <Typography   variant="h2" component="h2" style={{ textAlign : 'center' , fontWeight : 'bolder' , backgroundColor: '#cfe8fc' }} >
-            Welcome to #Corono Analysis App 
+            Welcome to #Corona Analysis App 
               </Typography>
               <ListView/>
         </Container>

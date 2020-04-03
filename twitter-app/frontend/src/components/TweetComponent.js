@@ -42,7 +42,11 @@ class TweetComponent extends Component
             value = {} ,
             tweetText="No Twitter Text Available",
             user={},
+            creation 
         } = this.props;
+        const time = new Date() - new Date(creation);
+        console.log('date : ',new Date(creation))
+        console.log('Time : ',time);
         // const classes = useStyles();
 
        return (
