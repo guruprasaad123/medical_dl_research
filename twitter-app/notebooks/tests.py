@@ -21,7 +21,7 @@ def _test_model(model, input_shape, output_sequence_length, french_vocab_size):
 
     print('loss_functions : ' ,model.loss_function)
     assert sparse_categorical_crossentropy in model.loss_functions,\
-        'Not using `sparse_categorical_crossentropy` function for loss keras %s '%(model.loss_function)
+        'Not using `sparse_categorical_crossentropy` function for loss keras     %s '%(model.loss_function)
 
 
 def test_tokenize(tokenize):

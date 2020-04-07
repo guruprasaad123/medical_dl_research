@@ -1,10 +1,10 @@
-import React , { Component } from "react"
+import React , { Fragment , Component } from "react"
 import styled from 'styled-components';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-
+import Chip from '@material-ui/core/Chip';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -15,6 +15,8 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Skeleton from '@material-ui/lab/Skeleton';
+
+import { timeAgo } from '../utils/utilities';
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -42,11 +44,26 @@ class TweetComponent extends Component
             value = {} ,
             tweetText="No Twitter Text Available",
             user={},
-            creation 
+            creation ,
+            lang,
+            sentiment={}
         } = this.props;
-        const time = new Date() - new Date(creation);
-        console.log('date : ',new Date(creation))
-        console.log('Time : ',time);
+        const timeago = timeAgo(creation);
+        const sentimentState = sentiment.polarity == 0 ? 'Neutral' : (sentiment.polarity >= -0.50 ? "Negative" : sentiment.polarity >=0.50 ? "Positive" : "Neutral")
+        // console.log('SentimentState => ' , sentimentState , sentiment.polarity );
+
+         const colorMap = {
+             Neutral : '#ff7961',
+             Positive : '#00bfa5',
+             Negative : '#e57373'
+         };
+
+         const chipMap = {
+            Neutral : 'default',
+            Positive : 'primary',
+            Negative : 'secondary'
+        };
+
         // const classes = useStyles();
 
        return (
@@ -64,13 +81,13 @@ class TweetComponent extends Component
                     />
                 )
                 }
-                action={
-                loading ? null : (
-                    <IconButton aria-label="settings">
-                    <MoreVertIcon />
-                    </IconButton>
-                )
-                }
+                // action={
+                // loading ? null : (
+                //     <IconButton aria-label="settings">
+                //     <MoreVertIcon />
+                //     </IconButton>
+                // )
+                // }
                 title={
                 loading ? (
                     <Skeleton animation="wave" height={10} width="80%" style={{ marginBottom: 6 }} />
@@ -78,7 +95,7 @@ class TweetComponent extends Component
                     user.name
                 )
                 }
-                subheader={loading ? <Skeleton animation="wave" height={10} width="40%" /> : '5 hours ago'}
+                subheader={loading ? <Skeleton animation="wave" height={10} width="40%" /> : timeago }
             />
             {/* {loading ? (
                 <Skeleton animation="wave" variant="rect" className={classes.media} />
@@ -97,11 +114,28 @@ class TweetComponent extends Component
                     <Skeleton animation="wave" height={10} width="80%" />
                 </React.Fragment>
                 ) : (
+                    <Fragment>
                 <Typography variant="body2" color="textSecondary" component="p">
                     {
                tweetText
                     }
                 </Typography>
+
+            <Typography variant="body2" color="textSecondary" component="div">
+                    <b>Lang : </b>
+                    <Chip variant="outlined" size="small" label={lang} />
+                </Typography>        
+
+                <Typography style={{ textAlign : 'left' , fontWeight : 'bolder' , padding:'2px' , 
+                // backgroundColor: colorMap[sentimentState] 
+                }} variant="body2" color="textSecondary" component="div">
+                    <b>Polarity : </b>
+                    <Chip variant="outlined" size="small" label={sentimentState} color={chipMap[sentimentState]} />
+                </Typography>       
+            
+            </Fragment>
+              
+                
                 )}
             </CardContent>
     </Card>

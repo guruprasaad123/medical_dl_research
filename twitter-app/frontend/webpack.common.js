@@ -19,7 +19,14 @@ function common(env)
           chunkFilename: '[name].bundle.js',
           path: path.resolve(__dirname, 'dist')
         },
-        plugins: [htmlWebpackPlugin],
+        plugins: [
+          htmlWebpackPlugin,
+          new webpack.DefinePlugin({
+            'process.env': {
+              'NODE_ENV': JSON.stringify( {host : 'http://localhost'} ),
+            }
+          })
+        ],
         //output:'./dist/main.js',
         module: {
           rules: [
