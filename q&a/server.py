@@ -1,7 +1,7 @@
 from flask import Flask, render_template, send_from_directory, request, redirect, jsonify, url_for, flash
 import json
-from deeppavlov import configs, train_model
-from deeppavlov.core.common.file import read_json
+# from deeppavlov import configs, train_model
+# from deeppavlov.core.common.file import read_json
 from flask_cors import CORS
 
 from models.FaqModel import FaqModel

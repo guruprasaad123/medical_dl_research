@@ -80,11 +80,12 @@ class twitter_api():
         return tweets 
 
     
-    def search_tweets(self,  q='corona' , max_id=None , count=10, result_type="recent" ):
+    def search_tweets(self,  q='corona' , geocode=(), max_id=None , count=10, result_type="recent" ):
 
         results = self.api.GetSearch( 
                         raw_query="q=%s&count=%d&include_entities=1&result_type=%s"%(q , count , result_type) ,
                         max_id = max_id ,
+                        geocode= geocode ,
                         return_json=True 
                         )
 
