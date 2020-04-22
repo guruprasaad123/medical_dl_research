@@ -15,6 +15,7 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Skeleton from '@material-ui/lab/Skeleton';
+import Paper from '@material-ui/core/Paper';
 
 import { timeAgo } from '../utils/utilities';
 
@@ -46,13 +47,14 @@ class TweetComponent extends Component
             user={},
             creation ,
             lang,
-            sentiment={}
+            sentiment={},
+            topics = []
         } = this.props;
         const timeago = timeAgo(creation);
         const sentimentState = sentiment.polarity == 0 ? 'Neutral' : (sentiment.polarity >= -0.50 ? "Negative" : sentiment.polarity >=0.50 ? "Positive" : "Neutral")
         // console.log('SentimentState => ' , sentimentState , sentiment.polarity );
-
-         const colorMap = {
+        let chipData = topics.length >0 ? topics : ['others']
+        const colorMap = {
              Neutral : '#ff7961',
              Positive : '#00bfa5',
              Negative : '#e57373'
@@ -132,11 +134,39 @@ class TweetComponent extends Component
                     <b>Polarity : </b>
                     <Chip variant="outlined" size="small" label={sentimentState} color={chipMap[sentimentState]} />
                 </Typography>       
-            
+
             </Fragment>
               
                 
                 )}
+
+            <Paper component="ul" style={
+                {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexWrap: 'wrap',
+                    listStyle: 'none',
+                    padding: '0.5rem',
+                    margin: 0,
+                  }
+            } >
+                {chipData.map((data,index) => {
+      
+                    return (
+                    <li key={index}>
+                        <Chip
+                        style={
+                            {
+                                margin: '0.5rem'
+                            }
+                        }
+                        label={data}
+                        />
+                    </li>
+                    );
+                })}
+                </Paper>
+                
             </CardContent>
     </Card>
       </React.Fragment>

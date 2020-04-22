@@ -81,10 +81,25 @@ class twitter_api():
         print(dataframe.shape)
         print(topic_df.shape)
 
-        final = pd.concat([dataframe, topic_df], axis=1)
+
+        def filter(x):
+            columns = ["money","emergency","recovered","treatment"]
+            str = []
+            for col in columns:
+                if bool(x[col]):
+                    str.append(col)
+            return str
+
+        obj= {}
+
+        obj["topics"] = topic_df.apply( filter , axis=1 )
+
+        obj =  pd.DataFrame(obj)
+
+        final = pd.concat([dataframe, obj], axis=1)
 
         print('final_topic_modelling => ',final.shape)
-
+        
         # return final
         return final.to_json(orient="records" )
 

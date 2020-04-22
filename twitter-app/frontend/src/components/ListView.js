@@ -155,6 +155,7 @@ class ListView extends Component {
                             user={object.user}
                             creation={object.created_at}
                             lang={object.lang}
+                            topics={object.topics}
                             sentiment={object.sentiment}
                             >        
                             </TweetComponent>
