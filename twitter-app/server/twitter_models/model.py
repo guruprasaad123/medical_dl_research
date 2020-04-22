@@ -18,6 +18,10 @@ from twitter import Api
 from googletrans import Translator
 from textblob import TextBlob
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+from corextopic import corextopic as ct
+import pandas as pd
+
 class twitter_api():
 
     def __init__(self):
@@ -26,6 +30,63 @@ class twitter_api():
           access_token_key=access_token,
           access_token_secret=access_token_secret)
         self.translator = Translator()
+
+    def topic_modelling(self , statuses):
+        
+        dataframe = pd.DataFrame(statuses)
+
+        vectorizer = TfidfVectorizer(
+            max_df=.5,
+            min_df=1,
+            max_features=None,
+            ngram_range=(1, 2),
+            norm=None,
+            binary=True,
+            use_idf=False,
+            sublinear_tf=False
+        )
+        vectorizer = vectorizer.fit(dataframe['text'])
+        tfidf = vectorizer.transform(dataframe['text'])
+        vocab = vectorizer.get_feature_names()
+
+        # Anchors designed to nudge the model towards measuring specific genres
+        anchors = [
+            ["money","fund"],
+            ["emergency"],
+            ["recovered"],
+            ["treatment"]
+        ]
+        anchors = [
+            [a for a in topic if a in vocab]
+            for topic in anchors
+        ]
+
+        model = ct.Corex(n_hidden=4, seed=42)
+        
+        model = model.fit(
+            tfidf,
+            words=vocab,
+            anchors=anchors, # Pass the anchors in here
+            anchor_strength=3 # Tell the model how much it should rely on the anchors
+        )
+
+        topic_df = pd.DataFrame(
+            model.transform(tfidf), 
+            #columns=["topic_{}".format(i+1) for i in range(4)]
+            columns=  ["money","emergency","recovered","treatment"]
+        ).astype(float)
+
+        topic_df.index = dataframe.index
+
+        print(dataframe.shape)
+        print(topic_df.shape)
+
+        final = pd.concat([dataframe, topic_df], axis=1)
+
+        print('final_topic_modelling => ',final.shape)
+
+        # return final
+        return final.to_json(orient="records" )
 
     def translate(self , statuses ):
 
@@ -94,6 +155,10 @@ class twitter_api():
         statuses = results['statuses']
 
         statuses = self.translate(statuses)
+
+        statuses = self.topic_modelling(statuses)
+
+        print('tweet => ',statuses[0])
 
         return {
             'tweets' : statuses ,

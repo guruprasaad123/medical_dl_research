@@ -7,11 +7,11 @@ twitterApi = twitter_api()
 # initializing a flask app
 app = Flask(__name__)
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-CORS(app ,  resources={r"/api/*": {"origins": "*"}} )
-
+# CORS(app ,  resources={r"/api/*": {"origins": "*"}} )
+CORS(app)
 
 @app.route('/api/<string:search>/<int:next_pg>/<int:max_id>',methods=['GET'])
-@cross_origin(allow_headers=['Content-Type'])
+# @cross_origin(allow_headers=['Content-Type'])
 def api( search , next_pg  , max_id ):
     """Returns the tweets based on user's search
 

@@ -1,6 +1,6 @@
 import tensorflow as tf
 import tensorflow_hub as hub
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
@@ -56,6 +56,14 @@ class FaqModel():
             question = tf.placeholder( tf.string , name="Question" )
             self.embed_questions = self.model( self.df.Question  )
             
+            sess = tf.Session(graph = graph)
+            
+            sess.run( [ tf.global_variables_initializer() ,  tf.tables_initializer() ] )
+            
+            self.question_matrix = sess.run(self.embed_questions)
+
+            print('question => ',self.question_matrix.shape )
+
             # with tf.Session(graph=graph)  as session:
 
             #     session.run( [ tf.global_variables_initializer() , tf.tables_initializer() ] )
@@ -78,26 +86,28 @@ class FaqModel():
             # question = tf.placeholder( tf.string )
             # embed_questions = self.model( question )
 
-            questions = []
-            for ques in self.df.Question:
-                questions.append(ques)
+            # questions = []
+            # for ques in self.df.Question:
+            #     questions.append(ques)
 
-            print(questions)
+            # print(questions)
             
             with tf.Session(graph=graph) as session:
                 session.run( tf.global_variables_initializer() )
                 session.run( tf.tables_initializer() )
 
-                question_matrix , query_matrix = session.run([ self.embed_questions , self.embed_query ] , feed_dict = {
+                query_matrix = session.run( self.embed_query  , feed_dict = {
                     'Query:0' : [Query]
                 })
 
                 # print( 'question runned ',question_matrix )
                 
-                print( query_matrix.shape )
-                product = np.inner(query_matrix , question_matrix)
+                print( query_matrix , self.question_matrix )
+                product = np.inner(query_matrix , self.question_matrix)
                 # product = product.reshape(-1,1)
                 
+                print('product => ',product.shape)
+
                 max_score = 1e-10
                 choosen_question = "Please provide a valid response"
 

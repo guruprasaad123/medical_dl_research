@@ -46,9 +46,10 @@ class ListView extends Component {
               
         const response = object.data.response ;
         console.log('response => ',  response.length ); 
+        console.log('response => 1 ',JSON.parse(response.tweets))
             if( response.length > 0 )
             {
-                this.setState({ tweets : response.tweets , searchMeta : response.search_metadata });
+                this.setState({ tweets : JSON.parse(response.tweets) , searchMeta : response.search_metadata });
             }
             
         }).catch((error)=>{
@@ -107,16 +108,18 @@ class ListView extends Component {
         axios.get(`${api_url}:${port}/api/corona/1/${searchMeta.max_id}`).then((object)=>{
             const response = object.data.response ;
             console.log('response => ',response.length);
+            console.log('response => 1 ',JSON.parse(response.tweets))
             if( response.length > 0 )
             {
                 this.setState({ 
                     tweets : 
                         [
-                        ...response.tweets,
+                        ...JSON.parse(response.tweets),
                         ...this.state.tweets 
                     ],
                     
                     searchMeta : response.search_metadata } , ()=>{
+                        console.log('response => 1 ',response.tweets[0])
                         this.scrollTop();
                     });
             }

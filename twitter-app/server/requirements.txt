@@ -4,3 +4,5 @@ tweepy==3.6.0
 googletrans==2.4.0
 Flask-Cors==3.0.8
 textblob==0.15.2
+sklearn
+corextopic===1.0.5

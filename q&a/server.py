@@ -13,6 +13,10 @@ app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 CORS(app)
 
+@app.route('/',methods=['GET'])
+def start():
+    return json.dumps({'success':True}) , 200
+
 @app.route('/api',methods=['POST'])
 def api():
   # checking if request is POST , is of type JSON
